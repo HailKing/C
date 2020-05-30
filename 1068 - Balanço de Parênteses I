@@ -1,0 +1,83 @@
+/*
+################################################################################################################################
+############## Question's name: Balanço de Parênteses I
+############## Question's number: 1068
+############## From: URI Online Judge
+############## Author: Hércules de Sousa
+############## Email: herculesdeso@gmail.com
+############## Data: 27/10/2019 
+################################################################################################################################
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#define max 10000
+
+typedef struct{
+  char arr[max];
+  int top;
+} stack;
+
+stack *create_stack(){
+  stack *s = (stack*)malloc(sizeof(stack));
+  s -> top = 0;
+  return s;
+}
+
+int push(stack *s, char element){
+  if(s -> top < max){
+    s -> arr[s -> top] = element;
+    s -> top++;
+    return 1;
+  }
+  return 0;
+}
+
+char pop(stack *s){
+  char popped;
+  if(s -> top > 0){
+    popped = s -> arr[s -> top - 1];
+    s -> top--;
+  }
+  else{
+    popped = ')';
+  }
+  return popped;
+}
+
+int verify(stack *s1, char expression[]){
+  int i;
+  for(i = 0; expression[i] != '\0'; i++){
+    if(expression[i] == '('){
+      push(s1, expression[i]);
+    }
+    else{
+      if(expression[i] == ')'){
+        char removed = pop(s1);
+        if (removed != '('){
+          return 0;
+        }
+      }
+    }
+  }
+  if(s1 -> top > 0){
+    return 0;
+  }
+  return 1;
+}
+
+int main() {
+  char expression[1001];
+  while(scanf("%s", expression) != EOF){
+    stack *s1 = create_stack();
+    int result = verify(s1, expression);
+    if (result == 1){
+      printf("correct\n");
+    }
+    else{
+      printf("incorrect\n");
+    }
+
+    free(s1);
+  }
+  return 0;
+}

@@ -1,0 +1,47 @@
+/*
+################################################################################################################################
+############## Question's name: Fila do Recreio
+############## Question's number: 1548
+############## From: URI Online Judge
+############## Author: Hércules de Sousa
+############## Email: herculesdeso@gmail.com
+############## Data: 29/09/2019 
+################################################################################################################################
+*/
+
+#include <stdio.h>
+
+void sort(int *aux, int len){
+  int i, j;
+  for (i = 1; i < len; i++){
+    int value = aux[i];
+    for (j = i - 1; j >= 0 && value > aux[j]; j--){
+      aux[j + 1] = aux[j];
+    }
+    aux[j + 1] = value;
+  }
+}
+
+int main(){
+  int times, len, i, j, k;
+  scanf("%d", &times);
+  for(i = 0; i < times; i++){
+    int count = 0;
+    scanf("%d", &len);
+    int l[len], aux[len];
+    for(j = 0; j < len; j++){
+      scanf("%d", &l[j]);
+      aux[j] = l[j];
+    }
+    sort(aux, len);
+    
+    for (k = 0; k < len; k++){
+      if (l[k] == aux[k]){
+        count++;
+      }
+    }
+    printf("%d\n", count);
+    
+  }
+  return 0;
+}

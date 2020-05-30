@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 10
+
+typedef struct{
+  int arr[max], n, inicio;
+}fila;
+
+fila *criar_fila(){
+  fila *f = (fila*)malloc(sizeof(fila));
+  f -> n = f -> inicio = 0;
+  return f;
+}
+
+int inserir_fila(fila *f, int v){
+  if(f -> n < max){
+    int fim = (f -> inicio + f -> n) % max;
+    f -> arr[fim] = v;
+    f -> n++;
+    return 1;
+  }
+  return -1;
+}
+
+void print_fila(fila *f){
+  if(f -> n > 0){
+    int fim_aux1 = f -> inicio;
+    int fim_aux2 = (f -> inicio + 1) % max;
+    printf("%d\n", f -> arr[fim_aux1]);
+    printf("%d\n", f -> arr[fim_aux2]);
+    printf("auxiliar1 = %d\n", fim_aux1);
+    printf("auxiliar2 = %d\n", fim_aux2);
+    /*
+    while(fim_aux2 != fim_aux1){
+      fim_aux2 = (f -> inicio + 1) % max;
+      printf("%d\n", f -> arr[fim_aux2]);
+    }
+    */
+  }
+  else printf("Sem elementos\n");
+}
+
+int main(){
+  fila *f1 = criar_fila();
+  inserir_fila(f1, 5);
+  inserir_fila(f1, 10);
+  inserir_fila(f1, 15);
+  print_fila(f1);
+  return 0;
+}

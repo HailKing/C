@@ -1,0 +1,42 @@
+/*
+################################################################################################################################
+############## Question's name: Pão a Metro
+############## Question's number: 2329
+############## From: URI Online Judge
+############## Author: Hércules de Sousa
+############## Email: herculesdeso@gmail.com
+############## Data: 06/10/2019 
+################################################################################################################################
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int get_cont(int *l_sandwich, int qtd_sandwich, int size){
+  int cont = 0, i;
+  for (i = 0; i < qtd_sandwich; i++){
+    cont += l_sandwich[i] / size;
+  }
+  return cont;
+}
+
+int main(){
+  int qtd_people, qtd_sandwich, i, greatest = 0;
+  scanf("%d", &qtd_people);
+  scanf("%d", &qtd_sandwich);
+  int *l_sandwich = (int*)malloc(sizeof(int) * qtd_sandwich);
+  for (i = 0; i < qtd_sandwich; i++){
+    scanf("%d", &l_sandwich[i]);
+    if (l_sandwich[i] > greatest){
+      greatest = l_sandwich[i];
+    }
+  }
+  for (i = 1; i <= greatest; i++){
+    int val = get_cont(l_sandwich, qtd_sandwich, i);
+    if (val < qtd_people){
+      printf("%d\n", i - 1);
+      break;
+    }
+  }
+  return 0;
+}

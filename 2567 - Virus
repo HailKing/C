@@ -1,0 +1,36 @@
+/*
+################################################################################################################################
+############## Question's name: Virus
+############## Question's number: 2567
+############## From: URI Online Judge
+############## Author: Hércules de Sousa
+############## Email: herculesdeso@gmail.com
+############## Data: 01/10/2019 
+################################################################################################################################
+*/
+
+#include <stdio.h>
+#include <stdlib.h> 
+
+int compare (const void * a, const void * b)
+{
+  return ( *(int*)a - *(int*)b );
+}
+
+int main(void) {
+  int quantity;
+  while(scanf("%d", &quantity) != EOF){
+    int arr[quantity], i, s = 0, f = quantity - 1, count = 0;
+    for (i = 0; i < quantity; i++){
+      scanf("%d", &arr[i]);
+    }
+    qsort(arr, quantity, sizeof(int), compare);
+    while((s != f) && (s < f)){
+      count += abs(arr[f] - arr[s]);
+      s++;
+      f--;
+    }
+    printf("%d\n", count);
+  }
+  return 0;
+}

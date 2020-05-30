@@ -1,0 +1,92 @@
+
+/*
+################################################################################################################################
+############## Question's name: O Elfo das Trevas
+############## Question's number: 1766
+############## From: URI Online Judge
+############## Author: Hércules de Sousa
+############## Email: herculesdeso@gmail.com
+############## Data: 07/10/2019 
+################################################################################################################################
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct{
+  char nome[101];
+  int peso, idade;
+  float altura;
+} rena;
+
+void bubble(rena *lista[], int tamanho){
+  int i, j;
+  rena *aux;
+  for (i = 0; i < tamanho; i++){
+    for (j = 0; j < tamanho - 1; j++){
+      if (lista[j] -> peso <= lista[j + 1] -> peso){
+        if (lista[j] -> peso < lista[j + 1] -> peso){
+          aux = lista[j + 1];
+          lista[j + 1] = lista[j];
+          lista[j] = aux;
+        }
+        else{
+          if(lista[j] -> peso == lista[j + 1] -> peso){
+            if(lista[j] -> idade >= lista[j + 1] -> idade){
+              if(lista[j] -> idade > lista[j + 1] -> idade){
+                aux = lista[j + 1];
+                lista[j + 1] = lista[j];
+                lista[j] = aux;
+              }
+              else{
+                if(lista[j] -> idade == lista[j + 1] -> idade){
+                  if(lista[j] -> altura >= lista[j + 1] -> altura){
+                    if(lista[j] -> altura > lista[j + 1] -> altura){
+                      aux = lista[j + 1];
+                      lista[j + 1] = lista[j];
+                      lista[j] = aux;
+                    }
+                    else{
+                      if(lista[j] -> altura == lista[j + 1] -> altura){
+                        if(strcmp(lista[j] -> nome, lista[j + 1] -> nome) > 0){
+                          aux = lista[j + 1];
+                          lista[j + 1] = lista[j];
+                          lista[j] = aux;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+int main(){
+  int cenario, a;
+  scanf("%d", &cenario);
+  for (a = 0; a < cenario; a++){
+    int total_renas, renasPuxantes, b;
+    scanf("%d %d", &total_renas, &renasPuxantes);
+    rena *lista[total_renas];
+    for (b = 0; b < total_renas; b++){
+      rena *p = (rena*)malloc(sizeof(rena));
+      scanf("%s", p -> nome);
+      scanf("%d", &(p -> peso));
+      scanf("%d", &(p -> idade));
+      scanf("%f", &(p -> altura));
+      lista[b] = p;
+    }
+    bubble(lista, total_renas);
+    printf("CENARIO {%d}\n", a + 1);
+    for (b = 0; b < renasPuxantes; b++){
+      printf("%d - %s\n", b + 1, lista[b] -> nome);
+    }
+  }
+  return 0;
+}

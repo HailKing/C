@@ -1,0 +1,92 @@
+/*
+################################################################################################################################
+############## Question's name: Ordenação por Tamanho
+############## Question's number: 1244
+############## From: URI Online Judge
+############## Author: Hércules de Sousa
+############## Email: herculesdeso@gmail.com
+############## Data: 04/10/2019 
+################################################################################################################################
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct{
+  char word[100];
+  int size;
+} st;
+
+void sort_struct(st *l[], int word_count){
+  int i, j;
+  st *aux;
+  for (i = 1; i < word_count; i++){
+    aux = l[i];
+    for (j = i - 1; j >= 0 && (l[j] -> size) < (aux -> size); j--){
+      l[j + 1] = l[j];
+    }
+    l[j + 1] = aux;
+  }
+}
+
+void print_sorted(st *l[], int word_count){
+  int p;
+    for(p = 0; p < word_count; p++){
+      if (p < word_count - 1){
+        printf("%s ", (l[p] -> word));
+      }
+      else{
+        printf("%s", (l[p] -> word));
+      }
+    }
+    printf("\n");
+}
+
+int main(){
+  int t, i, j, k;
+  scanf("%d", &t);
+  getchar();
+  for (i = 0; i < t; i++){
+    char phrase[3000], s[51];
+    int j, k, pos_l = 0, teste, word_count = 0;
+    st *l[50];
+    scanf("%[^\n]", phrase);
+    getchar();
+    for(j = 0; phrase[j] != '\0'; j++){
+      if (j == 0){
+        int pos = 0;
+        if (phrase[j] != ' '){
+          word_count++;
+          st *p = (st*)malloc(sizeof(st));
+          for(k = j; phrase[k] != ' ' && phrase[k] != '\0'; k++){
+          (p -> word)[pos] = phrase[k];
+          pos++;
+        }
+        (p -> word)[pos] = '\0';
+        p -> size = strlen(p -> word);
+        l[pos_l] = p;
+        pos_l++;
+        }
+      }
+      else{
+        if(phrase[j] == ' ' && phrase[j + 1] != ' '){
+          int pos = 0;
+          word_count++;
+          st *p = (st*)malloc(sizeof(st));
+          for(k = j + 1; phrase[k] != ' ' && phrase[k] != '\0'; k++){
+            (p -> word)[pos] = phrase[k];
+            pos++;
+          }
+          (p -> word)[pos] = '\0';
+
+          p -> size = strlen(p -> word);
+          l[pos_l] = p;
+          pos_l++;
+        }
+      }
+    }
+    sort_struct(l, word_count);
+    print_sorted(l, word_count);
+  }
+  return 0;
+}

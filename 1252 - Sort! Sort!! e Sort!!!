@@ -1,0 +1,52 @@
+
+/*
+################################################################################################################################
+############## Question's name: Sort! Sort!! e Sort!!!
+############## Question's number: 1252
+############## From: URI Online Judge
+############## Author: Hércules de Sousa
+############## Email: herculesdeso@gmail.com
+############## Data: 15/10/2019 
+################################################################################################################################
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+int global;
+
+int comp(const void *a, const void *b){
+  int n1 = *(int*)a;
+  int n2 = *(int*)b;
+  if (n1 % global == n2 % global){
+    if (abs(n1) % 2 == 0 && abs(n2) % 2 == 1) return 1;
+    if (abs(n1) % 2 == 1 && abs(n2) % 2 == 0) return -1;
+    if (abs(n1) % 2 == 1 && abs(n2) % 2 == 1) return (n1 > n2) ? -1 : 1;
+    else return (n1 < n2) ? -1 : 1;
+  } 
+  else{
+    return (n1 % global > n2 % global) ? 1 : -1;
+  }
+}
+
+
+int main() {
+  int n, m, i, j;
+  while(1){
+    scanf("%d %d", &n, &m);
+    if(n == 0 && m == 0){
+      printf("0 0\n");
+      break;
+    }
+    global = m;
+    int list[n];
+    for (i = 0; i < n; i++){
+      scanf("%d", &list[i]);
+    }
+    qsort(list, n, sizeof(int), comp);
+    printf("%d %d\n", n, m);
+    for (j = 0; j < n; j++){
+      printf("%d\n", list[j]);
+    }
+  }
+  return 0;
+}

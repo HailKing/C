@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 1000
+
+typedef struct{
+  int a[max], n;
+} lista;
+
+lista *criar(){
+  lista *l, *a = (lista*)malloc(sizeof(lista));
+  if(a == NULL) return NULL;
+  l = a;
+  l -> n = 0;
+  return l;
+}
+
+int inserir_fim(lista *l, int v){
+  if(l -> n < max){
+    l -> a[l -> n++] = v;
+    return 1;
+  }
+  return -1;
+}
+
+void print_list(lista *l){
+  printf("[");
+  for(int i = 0; i < l -> n; i++){
+    if(i == l -> n - 1) printf("%d", l -> a[i]);
+    else printf("%d, ", l -> a[i]);
+  }
+  printf("]\n");
+}
+
+int remover_fim(lista *l){
+  if(l -> n > 0){
+    int removido = l -> a[l -> n - 1];
+    l -> n--;
+    return removido;
+  }
+  return -1;
+}
+
+int inserir_posicao(lista *l, int pos, int v){
+  if(pos >= 0 && pos < l -> n && l -> n < max){
+    int i;
+    for(i = l -> n; i > pos; i--){
+      l -> a[i] = l -> a[i - 1];
+    }
+    l -> a[pos] = v;
+    l -> n++;
+    return 1;
+  }
+  return -1;
+}
+
+int remover_posicao(lista *l, int pos){
+  if(pos >= 0 && pos < l -> n){
+    int k;
+    int removido = l -> a[pos];
+    for(k = pos; k < l -> n - 1; k++){
+      l -> a[k] = l -> a[k + 1];
+    }
+    l -> n--;
+    return removido;
+  }
+  return -1;
+}
+
+int main() {
+  lista *l1 = criar();
+  inserir_fim(l1, 10);
+  inserir_fim(l1, 20);
+  inserir_fim(l1, 30);
+  inserir_fim(l1, 40);
+  inserir_fim(l1, 50);
+  inserir_fim(l1, 60);
+  print_list(l1);
+  remover_fim(l1);
+  print_list(l1);
+  inserir_fim(l1, 60);
+  inserir_fim(l1, 70);
+  inserir_posicao(l1, 3, 35);
+  inserir_posicao(l1, 1, 15);
+  print_list(l1);
+  remover_posicao(l1, 2);
+  print_list(l1);
+  return 0;
+}

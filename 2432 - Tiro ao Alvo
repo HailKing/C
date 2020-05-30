@@ -1,0 +1,52 @@
+/*
+################################################################################################################################
+############## Question's name: Tiro ao Alvo
+############## Question's number: 2432
+############## From: URI Online Judge
+############## Author: Hércules de Sousa
+############## Email: herculesdeso@gmail.com
+############## Data: 16/10/2019 
+################################################################################################################################
+*/
+
+#include <stdio.h>
+#include <math.h>
+
+long long int search(long double dist, long long int radius[], int qc){
+  int start = 0;
+  int  end = qc - 1;
+
+  if (dist > radius[end]){
+    return 0;
+  }
+  else{
+    while (start <= end){
+      int m = (start + end) / 2;
+      if (radius[m] == dist) return qc - m;
+      if (radius[m] < dist){
+        start = m + 1;
+      }
+      else{
+        end = m - 1;
+      }
+    }
+  }
+  return qc - start;
+}
+
+int main() {
+  long long qc, qt, points = 0;
+  scanf("%lld %lld", &qc, &qt);
+  long long int radius[qc], i;
+  for (i = 0; i < qc; i++){
+    scanf("%lld", &radius[i]);
+  }
+  for (i = 0; i < qt; i++){
+    long long int x, y;
+    scanf("%lld %lld", &x, &y);
+    long double dist = sqrt(pow(x, 2) + pow(y, 2));
+    points += search(dist, radius, qc);
+  }
+  printf("%lld\n", points);
+  return 0;
+}
